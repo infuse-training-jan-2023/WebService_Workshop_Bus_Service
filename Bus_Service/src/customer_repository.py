@@ -39,11 +39,10 @@ class customerRepository:
         # print(type(id))
         conn = customerRepository.connect_db()
         c = conn.cursor()
-        deleted_row = c.execute('select * from customer where id=?',(id,))
         delete_cursor = c.execute('delete from customer where id=?',(id,))
         conn.commit()
         
-        return deleted_row["id"]
+        return id
     except Exception as e:
         raise Exception('Error: ', e)
 

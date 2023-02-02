@@ -31,7 +31,7 @@ def add_new_customer():
 def delete_customers(id):
   print(id)
   deleted_customer = customer_actions.delete_customer(id)
-  if deleted_customer != {}:
+  if deleted_customer == {}:
     return Response("{'error': 'Erro deleting the customer'}", mimetype='application/json', status=500)
   return Response(json.dumps(deleted_customer), mimetype='application/json', status=201)
 
