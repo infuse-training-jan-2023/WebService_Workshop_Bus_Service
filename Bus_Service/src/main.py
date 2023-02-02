@@ -46,7 +46,7 @@ def add_new_booking():
     return Response("{'error': 'Erro addding the booking'}", mimetype='application/json', status=500)
   return Response(json.dumps(added_booking), mimetype='application/json', status=201)
 
-@app.route('/updatebookingpay', methods = ['POST'])
+@app.route('/updatebookingpay', methods = ['PUT'])
 def update_booking():
   request_data = request.get_json()
   booking_id = request_data['booking_id']
