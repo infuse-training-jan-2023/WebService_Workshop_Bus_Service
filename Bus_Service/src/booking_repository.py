@@ -22,5 +22,16 @@ class bookingRepository:
       }
     except Exception as e:
       raise Exception('Error: ', e)
-
-
+  @staticmethod
+  def update_booking(booking_id, pay_status):
+    try:
+      conn = bookingRepository.connect_db()
+      c = conn.cursor()
+      insert_cursor = c.execute('update booking set Payment_status=? where id=?', (pay_status,booking_id ))
+      conn.commit()
+      return {
+        'id': booking_id,
+        'Payment_status' : pay_status   
+      }
+    except Exception as e:
+      raise Exception('Error: ', e)

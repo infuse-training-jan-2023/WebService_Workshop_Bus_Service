@@ -46,7 +46,15 @@ def add_new_booking():
     return Response("{'error': 'Erro addding the booking'}", mimetype='application/json', status=500)
   return Response(json.dumps(added_booking), mimetype='application/json', status=201)
 
-
+@app.route('/updatebookingpay', methods = ['POST'])
+def update_booking():
+  request_data = request.get_json()
+  booking_id = request_data['booking_id']
+  pay_status=request_data['Payment_status']
+  updt_booking = booking_actions.update_booking(booking_id, pay_status)
+  if updt_booking == {}:
+    return Response("{'error': 'Erro addding the booking'}", mimetype='application/json', status=500)
+  return Response(json.dumps(updt_booking), mimetype='application/json', status=201)
 
 
 if __name__=='__main__':
