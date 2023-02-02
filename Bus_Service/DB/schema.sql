@@ -2,8 +2,8 @@ CREATE TABLE "bus_details"(
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "Departure_time" DATETIME NOT NULL,
     "Arrival_time" DATETIME NOT NULL,
-    "From" TEXT NOT NULL,
-    "To" TEXT NOT NULL,
+    "Beginning" TEXT NOT NULL,
+    "Destination" TEXT NOT NULL,
     "Bus_number" INTEGER NOT NULL
 );
 
