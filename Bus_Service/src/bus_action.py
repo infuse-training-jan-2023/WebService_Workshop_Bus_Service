@@ -1,8 +1,10 @@
 from bus_repository import BusRepository
 
+
 class BusActions:
   def __init__(self) -> None:
     self.bus_repo = BusRepository()
+
 
   def get_all_bus(self):
     try:
@@ -23,6 +25,7 @@ class BusActions:
       print(e)
       return {}
 
+
   def add_bus(self,depart,arrive,fromdes,todes,number):
     try:
       bus = self.bus_repo.add_bus(depart,arrive,fromdes,todes,number)
@@ -31,6 +34,7 @@ class BusActions:
       print(e)
       return {}
 
+
   def delete_bus(self,id):
     try:
       bus = self.bus_repo.delete_bus(id)
@@ -38,3 +42,4 @@ class BusActions:
     except Exception as e:
       print(e)
       return {}
+

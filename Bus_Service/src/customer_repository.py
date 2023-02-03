@@ -1,12 +1,15 @@
 import sqlite3
 
+
 class customerRepository:
   DBPATH = './bus.db'
+
 
   @staticmethod
   def connect_db():
     return sqlite3.connect(customerRepository.DBPATH)
-  
+
+
   @staticmethod
   def get_all_customer():
     try:
@@ -16,6 +19,7 @@ class customerRepository:
       return rows
     except Exception as e:
       raise Exception('Error: ', e)
+
 
   @staticmethod
   def add_customer(name, contact, DOB):
@@ -32,6 +36,7 @@ class customerRepository:
       }
     except Exception as e:
       raise Exception('Error: ', e)
+
 
   @staticmethod
   def delete_customer(id):

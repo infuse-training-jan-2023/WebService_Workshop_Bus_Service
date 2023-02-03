@@ -1,11 +1,14 @@
 import sqlite3
 
+
 class bookingRepository:
   DBPATH = './bus.db'
+
 
   @staticmethod
   def connect_db():
     return sqlite3.connect(bookingRepository.DBPATH)
+
 
   @staticmethod
   def add_booking(customer_id, bus_id, pay_status):
@@ -22,6 +25,8 @@ class bookingRepository:
       }
     except Exception as e:
       raise Exception('Error: ', e)
+
+
   @staticmethod
   def update_booking(booking_id, pay_status):
     try:
@@ -35,7 +40,8 @@ class bookingRepository:
       }
     except Exception as e:
       raise Exception('Error: ', e)
-  
+
+
   @staticmethod
   def get_bookings():
     try:
@@ -45,6 +51,7 @@ class bookingRepository:
       return rows
     except Exception as e:
       raise Exception('Error: ', e)
+
 
   @staticmethod
   def delete_bookings(id):
@@ -56,3 +63,5 @@ class bookingRepository:
       return "Delete action successful !!! "
     except Exception as e:
       raise Exception('Error: ', e)
+
+  

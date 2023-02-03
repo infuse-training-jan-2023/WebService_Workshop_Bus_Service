@@ -1,8 +1,10 @@
 from customer_repository import customerRepository
 
+
 class customerActions:
   def __init__(self) -> None:
     self.customer_repo = customerRepository()
+
 
   def get_all_customer(self):
     try:
@@ -20,6 +22,7 @@ class customerActions:
       print(e)
       return {}
 
+
   def add_customer(self, name, contact, DOB):
     try:
       customer = self.customer_repo.add_customer(name, contact, DOB)
@@ -27,7 +30,8 @@ class customerActions:
     except Exception as e:
       print(e)
       return {}
-   
+
+
   def delete_customer(self, id):
     try:
       print(id)
@@ -36,4 +40,5 @@ class customerActions:
     except Exception as e:
       print(e)
       return {}
-    
+
+

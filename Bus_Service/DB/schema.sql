@@ -7,12 +7,14 @@ CREATE TABLE "bus_details"(
     "Bus_number" INTEGER NOT NULL
 );
 
+
 CREATE TABLE "customer"(
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "Name" TEXT NOT NULL,
     "Contact" INTEGER NOT NULL,
     "DOB" INTEGER NOT NULL
 );
+
 
 CREATE TABLE "booking"(
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -23,3 +25,4 @@ CREATE TABLE "booking"(
     CONSTRAINT LINK_BUS  FOREIGN KEY("bus_id") REFERENCES bus_details('id') 
     
 );
+

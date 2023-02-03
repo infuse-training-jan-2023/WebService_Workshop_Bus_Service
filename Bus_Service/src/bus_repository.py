@@ -1,14 +1,17 @@
 
 import sqlite3
 
+
 class BusRepository:
   NOT_STARTED = "Not Started"
   DBPATH = './bus.db'
 
+
   @staticmethod
   def connect_db():
     return sqlite3.connect(BusRepository.DBPATH)
-  
+
+
   @staticmethod
   def get_all_bus():
     try:
@@ -18,6 +21,7 @@ class BusRepository:
       return rows
     except Exception as e:
       raise Exception('Error: ', e)
+
 
   @staticmethod
   def add_bus(depart,arrive,fromdes,todes,number):
@@ -37,6 +41,7 @@ class BusRepository:
     except Exception as e:
       raise Exception('Error: ', e)
 
+
   @staticmethod
   def delete_bus(id):
     try:
@@ -47,3 +52,4 @@ class BusRepository:
       return "BUS DETAIL DELETED SUCCESSFULLY"
     except Exception as e:
       raise Exception('Error: ', e)
+
