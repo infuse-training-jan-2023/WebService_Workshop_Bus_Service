@@ -17,6 +17,31 @@ class bookingActions:
       return booking
     except Exception as e:
       print(e)
+      return {}
+
+  def get_bookings(self):
+    try:
+      booking = self.booking_repo.get_bookings()
+      res = []
+      for booking in booking:
+        res.append({
+          'id': booking[0],
+          'customer_id': booking[1],
+          'bus_id': booking[2],
+          'Payment_status': booking[3],
+
+        })
+      return res
+    except Exception as e:
+      print(e)
+      return {}
+
+  def delete_booking(self,id):
+    try:
+      booking = self.booking_repo.delete_bookings(id)
+      return booking
+    except Exception as e:
+      print(e)
       return {}  
   
    
