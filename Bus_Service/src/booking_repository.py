@@ -35,3 +35,24 @@ class bookingRepository:
       }
     except Exception as e:
       raise Exception('Error: ', e)
+  
+  @staticmethod
+  def get_bookings():
+    try:
+      conn = bookingRepository.connect_db()
+      c = conn.cursor()
+      rows = c.execute('select * from booking')
+      return rows
+    except Exception as e:
+      raise Exception('Error: ', e)
+
+  @staticmethod
+  def delete_bookings(id):
+    try:
+      conn = bookingRepository.connect_db()
+      c = conn.cursor()
+      delete_cursor = c.execute('DELETE FROM booking WHERE id= ?', (id,))
+      conn.commit()
+      return "Delete action successful !!! "
+    except Exception as e:
+      raise Exception('Error: ', e)
