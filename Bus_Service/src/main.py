@@ -1,12 +1,12 @@
 from flask import Flask, Response, request
 import json
-
+from bus_action import BusActions
 from customer_action import customerActions
 from booking_action import bookingActions
 app=Flask(__name__)
 customer_actions=customerActions()
 booking_actions=bookingActions()
-
+bus_action=BusActions()
 
 
 @app.route('/allcustomers', methods = ['GET'])
@@ -55,6 +55,55 @@ def update_booking():
   if updt_booking == {}:
     return Response("{'error': 'Erro addding the booking'}", mimetype='application/json', status=500)
   return Response(json.dumps(updt_booking), mimetype='application/json', status=201)
+
+
+
+@app.route('/busDetails/display/',methods=['GET'])
+def get_all_bus():
+   buses = bus_action.get_all_bus()
+   print(buses)
+   return Response(json.dumps(buses), mimetype='application/json', status=200)
+    
+# create an api to add a new item
+@app.route('/busDetails/insert', methods = ['POST'])
+def add_new_bus():
+  request_data = request.get_json()
+  depart = request_data['Departure_time']
+  arrive = request_data['Arrival_time']
+  fromdes = request_data['Beginning']
+  todes = request_data['Destination']
+  number = request_data['Bus_number']
+  added_bus = bus_action.add_bus(depart,arrive,fromdes,todes,number)
+  if added_bus == {}:
+    return Response("{'error': 'Erro addding the item'}", mimetype='application/json', status=500)
+  return Response(json.dumps(added_bus), mimetype='application/json', status=201)
+
+@app.route('/busDetails/delete', methods = ['POST'])
+def delete_bus():
+  request_data = request.get_json()
+  id = request_data['id']
+  added_bus = bus_action.delete_bus(id)
+  if delete_bus == {}:
+    return Response("{'error': 'Erro addding the item'}", mimetype='application/json', status=500)
+  return Response(json.dumps(added_bus), mimetype='application/json', status=201)
+
+@app.route('/displayBooking', methods = ['GET'])
+def display_booking():
+  bookings = booking_action.get_bookings()
+  print(bookings)
+  return Response(json.dumps(bookings), mimetype='application/json', status=200)
+        
+@app.route('/deleteBooking', methods = ['POST'])
+def delete_booking():
+  request_data = request.get_json()
+  id = request_data['id']
+  delete_booking = booking_action.delete_booking(id)
+  print("in main")
+  print(delete_booking)
+  if delete_booking == {}:
+    return Response("{'error': 'Erro deleting the item'}", mimetype='application/json', status=500)
+  return Response(json.dumps(delete_booking), mimetype='application/json', status=201)
+
 
 
 if __name__=='__main__':
