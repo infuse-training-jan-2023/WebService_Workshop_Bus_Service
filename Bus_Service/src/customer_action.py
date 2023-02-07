@@ -1,9 +1,9 @@
-from customer_repository import customerRepository
+from customer_repository import CustomerRepository
 
 
 class CustomerActions:
   def __init__(self) -> None:
-    self.customer_repo = customerRepository()
+    self.customer_repo = CustomerRepository()
 
 
   def get_all_customer_details(self):

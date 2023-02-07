@@ -9,19 +9,19 @@ class BookingRepository:
     self.connection = None
 
 
-  @staticmethod
+ 
   def connect_db(self):
     if self.connection is None:
       self.connection =  sqlite3.connect(self.db_path, check_same_thread=False)
 
 
-  @staticmethod
-  def add_booking(customer_id, bus_id, pay_status):
+ 
+  def add_booking(self,customer_id, bus_id, pay_status):
     try:
-      conn = BookingRepository.connect_db()
-      c = conn.cursor()
-      insert_cursor = c.execute('insert into booking(customer_id, bus_id, payment_status) values(?,?,?)', (customer_id, bus_id, pay_status))
-      conn.commit()
+      self.connect_db()
+      cursor = self.connection.cursor()
+      insert_cursor = cursor.execute('insert into booking(customer_id, bus_id, payment_status) values(?,?,?)', (customer_id, bus_id, pay_status))
+      self.connection.commit()
       return {
         'id': insert_cursor.lastrowid,
         'customer_id': customer_id,
@@ -32,13 +32,13 @@ class BookingRepository:
       raise Exception('Error: ', e)
 
 
-  @staticmethod
-  def update_booking(booking_id, pay_status):
+ 
+  def update_booking(self,booking_id, pay_status):
     try:
-      conn = BookingRepository.connect_db()
-      c = conn.cursor()
-      insert_cursor = c.execute('update booking set payment_status=? where id=?', (pay_status,booking_id ))
-      conn.commit()
+      self.connect_db()
+      cursor = self.connection.cursor()
+      insert_cursor = cursor.execute('update booking set payment_status=? where id=?', (pay_status,booking_id ))
+      self.connection.commit()
       return {
         'id': booking_id,
         'payment_status' : pay_status   
@@ -47,24 +47,23 @@ class BookingRepository:
       raise Exception('Error: ', e)
 
 
-  @staticmethod
-  def get_bookings():
+
+  def get_bookings(self):
     try:
-      conn = BookingRepository.connect_db()
-      c = conn.cursor()
-      rows = c.execute('select * from booking')
+      self.connect_db()
+      cursor = self.connection.cursor()
+      rows = cursor.execute('select * from booking')
       return rows
     except Exception as e:
       raise Exception('Error: ', e)
 
 
-  @staticmethod
-  def delete_bookings(id):
+  def delete_bookings(self,id):
     try:
-      conn = BookingRepository.connect_db()
-      c = conn.cursor()
-      delete_cursor = c.execute('DELETE FROM booking WHERE id= ?', (id,))
-      conn.commit()
+      self.connect_db()
+      cursor = self.connection.cursor()
+      delete_cursor = cursor.execute('DELETE FROM booking WHERE id= ?', (id,))
+      self.connection.commit()
       return "Delete action successful !!! "
     except Exception as e:
       raise Exception('Error: ', e)

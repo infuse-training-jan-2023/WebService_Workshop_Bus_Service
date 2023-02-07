@@ -17,13 +17,12 @@ def get_all_customers():
   return Response(json.dumps(customers), mimetype='application/json', status=200)
 
 
-# create an api to add a new customer
 @app.route('/customer', methods = ['POST'])
 def add_new_customer():
   request_data = request.get_json()
   name = request_data['name']
   contact = request_data['contact']
-  dob=request_data['DOB']
+  dob=request_data['date_of_birth']
   added_customer = customer_actions.add_customer(name, contact, dob)
   if added_customer == {}:
     return Response("{'error': 'Erro addding the customer'}", mimetype='application/json', status=500)
@@ -64,6 +63,9 @@ def update_booking():
 
 
 
+
+
+
 @app.route('/buses',methods=['GET'])
 def get_all_bus_details():
    buses = bus_action.get_all_bus_details()
@@ -71,7 +73,6 @@ def get_all_bus_details():
    return Response(json.dumps(buses), mimetype='application/json', status=200)
 
 
-# create an api to add a new item
 @app.route('/bus', methods = ['POST'])
 def add_new_bus():
   request_data = request.get_json()
