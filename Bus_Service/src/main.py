@@ -1,18 +1,18 @@
 from flask import Flask, Response, request
 import json
 from bus_action import BusActions
-from customer_action import customerActions
-from booking_action import bookingActions
-app=Flask(__name__)
-customer_actions=customerActions()
-booking_actions=bookingActions()
-bus_action=BusActions()
+from customer_action import CustomerActions
+from booking_action import BookingActions
+app = Flask(__name__)
+customer_actions = CustomerActions()
+booking_actions = BookingActions()
+bus_action = BusActions()
 
 
 
-@app.route('/allcustomers', methods = ['GET'])
+@app.route('/customers', methods = ['GET'])
 def get_all_customers():
-  customers = customer_actions.get_all_customer()
+  customers = customer_actions.get_all_customer_details()
   print(customers)
   return Response(json.dumps(customers), mimetype='application/json', status=200)
 
@@ -23,16 +23,16 @@ def add_new_customer():
   request_data = request.get_json()
   name = request_data['name']
   contact = request_data['contact']
-  DOB=request_data['DOB']
-  added_customer = customer_actions.add_customer(name, contact, DOB)
+  dob=request_data['DOB']
+  added_customer = customer_actions.add_customer(name, contact, dob)
   if added_customer == {}:
     return Response("{'error': 'Erro addding the customer'}", mimetype='application/json', status=500)
   return Response(json.dumps(added_customer), mimetype='application/json', status=201)
 
 
-@app.route('/customerdelete/<int:id>', methods = ['GET'])
+@app.route('/customer/<int:id>', methods = ['DELETE'])
 def delete_customers(id):
-  print(id)
+  
   deleted_customer = customer_actions.delete_customer(id)
   if deleted_customer == {}:
     return Response("{'error': 'Erro deleting the customer'}", mimetype='application/json', status=500)
@@ -51,7 +51,7 @@ def add_new_booking():
   return Response(json.dumps(added_booking), mimetype='application/json', status=201)
 
 
-@app.route('/updatebookingpay', methods = ['PUT'])
+@app.route('/booking', methods = ['PUT'])
 def update_booking():
   request_data = request.get_json()
   booking_id = request_data['booking_id']
@@ -64,15 +64,15 @@ def update_booking():
 
 
 
-@app.route('/busDetails/display/',methods=['GET'])
-def get_all_bus():
-   buses = bus_action.get_all_bus()
+@app.route('/buses',methods=['GET'])
+def get_all_bus_details():
+   buses = bus_action.get_all_bus_details()
    print(buses)
    return Response(json.dumps(buses), mimetype='application/json', status=200)
 
 
 # create an api to add a new item
-@app.route('/busDetails/insert', methods = ['POST'])
+@app.route('/bus', methods = ['POST'])
 def add_new_bus():
   request_data = request.get_json()
   depart = request_data['Departure_time']
@@ -86,7 +86,7 @@ def add_new_bus():
   return Response(json.dumps(added_bus), mimetype='application/json', status=201)
 
 
-@app.route('/busDetails/delete', methods = ['POST'])
+@app.route('/bus', methods = ['DELETE'])
 def delete_bus():
   request_data = request.get_json()
   id = request_data['id']
@@ -96,18 +96,18 @@ def delete_bus():
   return Response(json.dumps(added_bus), mimetype='application/json', status=201)
 
 
-@app.route('/displayBooking', methods = ['GET'])
+@app.route('/booking', methods = ['GET'])
 def display_booking():
-  bookings = booking_action.get_bookings()
+  bookings = booking_actions.get_bookings()
   print(bookings)
   return Response(json.dumps(bookings), mimetype='application/json', status=200)
 
 
-@app.route('/deleteBooking', methods = ['POST'])
+@app.route('/booking', methods = ['DELETE'])
 def delete_booking():
   request_data = request.get_json()
   id = request_data['id']
-  delete_booking = booking_action.delete_booking(id)
+  delete_booking = booking_actions.delete_booking(id)
   print("in main")
   print(delete_booking)
   if delete_booking == {}:

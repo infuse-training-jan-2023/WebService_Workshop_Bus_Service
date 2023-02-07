@@ -1,19 +1,23 @@
 import sqlite3
 
 
-class customerRepository:
-  DBPATH = './bus.db'
+class CustomerRepository:
+
+  def __init__(self) -> None:   
+    self.db_path = './bus.db'
+    self.connection = None
+
+
+  def connect_db(self):
+    if self.connection is None:
+      self.connection =  sqlite3.connect(self.db_path, check_same_thread=False)
+ 
 
 
   @staticmethod
-  def connect_db():
-    return sqlite3.connect(customerRepository.DBPATH)
-
-
-  @staticmethod
-  def get_all_customer():
+  def get_all_customer_details():
     try:
-      conn = customerRepository.connect_db()
+      conn = CustomerRepository.connect_db()
       c = conn.cursor()
       rows = c.execute('select * from customer')
       return rows
@@ -22,17 +26,17 @@ class customerRepository:
 
 
   @staticmethod
-  def add_customer(name, contact, DOB):
+  def add_customer(name, contact, dob):
     try:
-      conn = customerRepository.connect_db()
+      conn = CustomerRepository.connect_db()
       c = conn.cursor()
-      insert_cursor = c.execute('insert into customer(name, contact, DOB) values(?,?,?)', (name, contact, DOB))
+      insert_cursor = c.execute('insert into customer(name, contact, dob) values(?,?,?)', (name, contact, dob))
       conn.commit()
       return {
         'id': insert_cursor.lastrowid,
         'name': name,
         'contact': contact,
-        'DOB': DOB,
+        'DOB': dob
       }
     except Exception as e:
       raise Exception('Error: ', e)
@@ -41,8 +45,8 @@ class customerRepository:
   @staticmethod
   def delete_customer(id):
     try:
-        # print(type(id))
-        conn = customerRepository.connect_db()
+       
+        conn = CustomerRepository.connect_db()
         c = conn.cursor()
         delete_cursor = c.execute('delete from customer where id=?',(id,))
         conn.commit()

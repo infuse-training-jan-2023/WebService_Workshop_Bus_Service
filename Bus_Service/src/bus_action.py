@@ -6,11 +6,11 @@ class BusActions:
     self.bus_repo = BusRepository()
 
 
-  def get_all_bus(self):
+  def get_all_bus_details(self):
     try:
-      bus = self.bus_repo.get_all_bus()
+      bus_details = self.bus_repo.get_all_bus_details()
       res = []
-      for bus in bus:
+      for bus in bus_details:
         res.append({
           'id': bus[0],
           'Departure_time': bus[1],

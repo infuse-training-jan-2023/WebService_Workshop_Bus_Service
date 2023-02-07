@@ -1,9 +1,9 @@
-from booking_repository import bookingRepository
+from booking_repository import BookingRepository
 
 
-class bookingActions:
+class BookingActions:
   def __init__(self) -> None:
-    self.booking_repo = bookingRepository()
+    self.booking_repo = BookingRepository()
 
 
   def add_booking(self, customer_id, bus_id, pay_status):

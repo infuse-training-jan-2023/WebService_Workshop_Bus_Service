@@ -3,17 +3,19 @@ import sqlite3
 
 
 class BusRepository:
-  NOT_STARTED = "Not Started"
-  DBPATH = './bus.db'
+  def __init__(self) -> None:   
+    self.db_path = './bus.db'
+    self.connection = None
+
+
+  def connect_db(self):
+    if self.connection is None:
+      self.connection =  sqlite3.connect(self.db_path, check_same_thread=False)
+
 
 
   @staticmethod
-  def connect_db():
-    return sqlite3.connect(BusRepository.DBPATH)
-
-
-  @staticmethod
-  def get_all_bus():
+  def get_all_bus_details():
     try:
       conn = BusRepository.connect_db()
       c = conn.cursor()
@@ -24,19 +26,19 @@ class BusRepository:
 
 
   @staticmethod
-  def add_bus(depart,arrive,fromdes,todes,number):
+  def add_bus(depart,arrive,from_location,to_destination,bus_number):
     try:
       conn = BusRepository.connect_db()
       c = conn.cursor()
-      insert_cursor = c.execute('insert into bus_details(Departure_time,Arrival_time,Beginning,Destination,Bus_number) values(?,?,?,?,?)', (depart,arrive,fromdes,todes,number))
+      insert_cursor = c.execute('insert into bus_details(departure_time,arrival_time,beginning,destination,bus_number) values(?,?,?,?,?)', (depart,arrive,from_location,to_destination,bus_number))
       conn.commit()
       c.execute('select * from bus_details')
       return {
     "Departure_time" : depart ,
     "Arrival_time" : arrive,
-    "Beginning" : fromdes,
-    "Destination" : todes,
-    "Bus_number" : number 
+    "Beginning" : from_location,
+    "Destination" : to_destination,
+    "Bus_number" : bus_number 
       }
     except Exception as e:
       raise Exception('Error: ', e)
