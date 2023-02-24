@@ -1,8 +1,10 @@
-from booking_repository import bookingRepository
+from booking_repository import BookingRepository
 
-class bookingActions:
+
+class BookingActions:
   def __init__(self) -> None:
-    self.booking_repo = bookingRepository()
+    self.booking_repo = BookingRepository()
+
 
   def add_booking(self, customer_id, bus_id, pay_status):
     try:
@@ -11,6 +13,7 @@ class bookingActions:
     except Exception as e:
       print(e)
       return {}
+
   def update_booking(self, booking_id, pay_status):
     try:
       booking = self.booking_repo.update_booking(booking_id, pay_status)
@@ -18,6 +21,7 @@ class bookingActions:
     except Exception as e:
       print(e)
       return {}
+
 
   def get_bookings(self):
     try:
@@ -36,6 +40,7 @@ class bookingActions:
       print(e)
       return {}
 
+
   def delete_booking(self,id):
     try:
       booking = self.booking_repo.delete_bookings(id)
@@ -45,4 +50,5 @@ class bookingActions:
       return {}  
   
    
+
 
